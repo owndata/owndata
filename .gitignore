@@ -1,0 +1,4 @@
+build/
+debug/
+external/rocksdb/util/build_version.cc
+*.user
