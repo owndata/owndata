@@ -18,8 +18,6 @@
 #include "InProcessNode.h"
 
 #include <functional>
-//remove
-#include <iostream>
 #include <future>
 #include <boost/utility/value_init.hpp>
 #include <CryptoNoteCore/TransactionApi.h>

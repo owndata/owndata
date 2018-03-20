@@ -819,90 +819,92 @@ logger(currency.logger) {
 }
 
 CurrencyBuilder::CurrencyBuilder(Logging::ILogger& log) : m_currency(log) {
-    cryptonoteName(CRYPTONOTE_NAME);
-    maxBlockNumber(parameters::CRYPTONOTE_MAX_BLOCK_NUMBER);
-    maxBlockBlobSize(parameters::CRYPTONOTE_MAX_BLOCK_BLOB_SIZE);
-    maxTxSize(parameters::CRYPTONOTE_MAX_TX_SIZE);
-    publicAddressBase58Prefix(parameters::CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX);
-    minedMoneyUnlockWindow(parameters::CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW);
+  cryptonoteName(CRYPTONOTE_NAME);
+  maxBlockNumber(parameters::CRYPTONOTE_MAX_BLOCK_NUMBER);
+  maxBlockBlobSize(parameters::CRYPTONOTE_MAX_BLOCK_BLOB_SIZE);
+  maxTxSize(parameters::CRYPTONOTE_MAX_TX_SIZE);
+  publicAddressBase58Prefix(parameters::CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX);
+  minedMoneyUnlockWindow(parameters::CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW);
 
-    timestampCheckWindow(parameters::BLOCKCHAIN_TIMESTAMP_CHECK_WINDOW);
-    blockFutureTimeLimit(parameters::CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT);
+  timestampCheckWindow(parameters::BLOCKCHAIN_TIMESTAMP_CHECK_WINDOW);
+  blockFutureTimeLimit(parameters::CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT);
 
-    moneySupply(parameters::MONEY_SUPPLY);
-    emissionSpeedFactor(parameters::EMISSION_SPEED_FACTOR);
-    cryptonoteCoinVersion(parameters::CRYPTONOTE_COIN_VERSION);
-    genesisBlockReward(parameters::GENESIS_BLOCK_REWARD);
+  moneySupply(parameters::MONEY_SUPPLY);
+  emissionSpeedFactor(parameters::EMISSION_SPEED_FACTOR);
+cryptonoteCoinVersion(parameters::CRYPTONOTE_COIN_VERSION);
+genesisBlockReward(parameters::GENESIS_BLOCK_REWARD);
 
-    rewardBlocksWindow(parameters::CRYPTONOTE_REWARD_BLOCKS_WINDOW);
-    minMixin(parameters::MIN_MIXIN);
-    mandatoryMixinBlockVersion(parameters::MANDATORY_MIXIN_BLOCK_VERSION);
-    mixinStartHeight(parameters::MIXIN_START_HEIGHT);
-    mandatoryTransaction(parameters::MANDATORY_TRANSACTION);
-    killHeight(parameters::KILL_HEIGHT);
-    tailEmissionReward(parameters::TAIL_EMISSION_REWARD);
-    zawyDifficultyBlockIndex(parameters::ZAWY_DIFFICULTY_BLOCK_INDEX);
-    zawyDifficultyV2(parameters::ZAWY_DIFFICULTY_V2);
-    zawyDifficultyBlockVersion(parameters::ZAWY_DIFFICULTY_DIFFICULTY_BLOCK_VERSION);
-    buggedZawyDifficultyBlockIndex(parameters::BUGGED_ZAWY_DIFFICULTY_BLOCK_INDEX);
+  rewardBlocksWindow(parameters::CRYPTONOTE_REWARD_BLOCKS_WINDOW);
+minMixin(parameters::MIN_MIXIN);
+mandatoryMixinBlockVersion(parameters::MANDATORY_MIXIN_BLOCK_VERSION);
+mixinStartHeight(parameters::MIXIN_START_HEIGHT);
+mandatoryTransaction(parameters::MANDATORY_TRANSACTION);
+killHeight(parameters::KILL_HEIGHT);
+tailEmissionReward(parameters::TAIL_EMISSION_REWARD);
+zawyDifficultyBlockIndex(parameters::ZAWY_DIFFICULTY_BLOCK_INDEX);
+zawyDifficultyV2(parameters::ZAWY_DIFFICULTY_V2);
+zawyDifficultyBlockVersion(parameters::ZAWY_DIFFICULTY_DIFFICULTY_BLOCK_VERSION);
+buggedZawyDifficultyBlockIndex(parameters::BUGGED_ZAWY_DIFFICULTY_BLOCK_INDEX);
+  blockGrantedFullRewardZone(parameters::CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE);
+  minerTxBlobReservedSize(parameters::CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE);
+maxTransactionSizeLimit(parameters::MAX_TRANSACTION_SIZE_LIMIT);
 
-    blockGrantedFullRewardZone(parameters::CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE);
-    blockGrantedFullRewardZoneV1(parameters::CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V1);
-    blockGrantedFullRewardZoneV2(parameters::CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V2);
+  numberOfDecimalPlaces(parameters::CRYPTONOTE_DISPLAY_DECIMAL_POINT);
 
-    minerTxBlobReservedSize(parameters::CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE);
-    maxTransactionSizeLimit(parameters::MAX_TRANSACTION_SIZE_LIMIT);
+  mininumFee(parameters::MINIMUM_FEE);
+  defaultDustThreshold(parameters::DEFAULT_DUST_THRESHOLD);
 
-    numberOfDecimalPlaces(parameters::CRYPTONOTE_DISPLAY_DECIMAL_POINT);
+  difficultyTarget(parameters::DIFFICULTY_TARGET);
+  difficultyWindow(parameters::DIFFICULTY_WINDOW);
+  difficultyLag(parameters::DIFFICULTY_LAG);
+  difficultyCut(parameters::DIFFICULTY_CUT);
 
-    mininumFee(parameters::MINIMUM_FEE);
-    defaultDustThreshold(parameters::DEFAULT_DUST_THRESHOLD);
+  maxBlockSizeInitial(parameters::MAX_BLOCK_SIZE_INITIAL);
+  maxBlockSizeGrowthSpeedNumerator(parameters::MAX_BLOCK_SIZE_GROWTH_SPEED_NUMERATOR);
+  maxBlockSizeGrowthSpeedDenominator(parameters::MAX_BLOCK_SIZE_GROWTH_SPEED_DENOMINATOR);
 
-    difficultyTarget(parameters::DIFFICULTY_TARGET);
+  lockedTxAllowedDeltaSeconds(parameters::CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_SECONDS);
+  lockedTxAllowedDeltaBlocks(parameters::CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_BLOCKS);
 
-    difficultyWindow(parameters::DIFFICULTY_WINDOW);
-    difficultyWindowV1(parameters::DIFFICULTY_WINDOW_V1);
-    difficultyWindowV2(parameters::DIFFICULTY_WINDOW_V2);
+  mempoolTxLiveTime(parameters::CRYPTONOTE_MEMPOOL_TX_LIVETIME);
+  mempoolTxFromAltBlockLiveTime(parameters::CRYPTONOTE_MEMPOOL_TX_FROM_ALT_BLOCK_LIVETIME);
+  numberOfPeriodsToForgetTxDeletedFromPool(parameters::CRYPTONOTE_NUMBER_OF_PERIODS_TO_FORGET_TX_DELETED_FROM_POOL);
 
-    difficultyLag(parameters::DIFFICULTY_LAG);
-    difficultyLagV1(parameters::DIFFICULTY_LAG_V1);
-    difficultyLagV2(parameters::DIFFICULTY_LAG_V2);
-
-    difficultyCut(parameters::DIFFICULTY_CUT);
-    difficultyCutV1(parameters::DIFFICULTY_CUT_V1);
-    difficultyCutV2(parameters::DIFFICULTY_CUT_V2);
-
-    expectedNumberOfBlocksPerDay(parameters::EXPECTED_NUMBER_OF_BLOCKS_PER_DAY);
-
-    maxBlockSizeInitial(parameters::MAX_BLOCK_SIZE_INITIAL);
-    maxBlockSizeGrowthSpeedNumerator(parameters::MAX_BLOCK_SIZE_GROWTH_SPEED_NUMERATOR);
-    maxBlockSizeGrowthSpeedDenominator(parameters::MAX_BLOCK_SIZE_GROWTH_SPEED_DENOMINATOR);
-
-    lockedTxAllowedDeltaSeconds(parameters::CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_SECONDS);
-    lockedTxAllowedDeltaBlocks(parameters::CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_BLOCKS);
-
-    mempoolTxLiveTime(parameters::CRYPTONOTE_MEMPOOL_TX_LIVETIME);
-    mempoolTxFromAltBlockLiveTime(parameters::CRYPTONOTE_MEMPOOL_TX_FROM_ALT_BLOCK_LIVETIME);
-    numberOfPeriodsToForgetTxDeletedFromPool(parameters::CRYPTONOTE_NUMBER_OF_PERIODS_TO_FORGET_TX_DELETED_FROM_POOL);
-
-    // fusion transactions fix
-    fusionTxMaxSize(parameters::MAX_TRANSACTION_SIZE_LIMIT * 30 / 100);
-    fusionTxMinInputCount(parameters::FUSION_TX_MIN_INPUT_COUNT);
-    fusionTxMinInOutCountRatio(parameters::FUSION_TX_MIN_IN_OUT_COUNT_RATIO);
+// fusion transactions fix
+fusionTxMaxSize(parameters::MAX_TRANSACTION_SIZE_LIMIT * 30 / 100);
+  fusionTxMinInputCount(parameters::FUSION_TX_MIN_INPUT_COUNT);
+  fusionTxMinInOutCountRatio(parameters::FUSION_TX_MIN_IN_OUT_COUNT_RATIO);
 
     keyImageCheckingBlockIndex(parameters::KEY_IMAGE_CHECKING_BLOCK_INDEX);
-    upgradeHeightV2(parameters::UPGRADE_HEIGHT_V2);
-    upgradeHeightV3(parameters::UPGRADE_HEIGHT_V3);
-    upgradeVotingThreshold(parameters::UPGRADE_VOTING_THRESHOLD);
-    upgradeVotingWindow(parameters::UPGRADE_VOTING_WINDOW);
-    upgradeWindow(parameters::UPGRADE_WINDOW);
+  upgradeHeightV2(parameters::UPGRADE_HEIGHT_V2);
+  upgradeHeightV3(parameters::UPGRADE_HEIGHT_V3);
+  upgradeVotingThreshold(parameters::UPGRADE_VOTING_THRESHOLD);
+  upgradeVotingWindow(parameters::UPGRADE_VOTING_WINDOW);
+  upgradeWindow(parameters::UPGRADE_WINDOW);
 
-    blocksFileName(parameters::CRYPTONOTE_BLOCKS_FILENAME);
-    blockIndexesFileName(parameters::CRYPTONOTE_BLOCKINDEXES_FILENAME);
-    txPoolFileName(parameters::CRYPTONOTE_POOLDATA_FILENAME);
-    genesisCoinbaseTxHex(parameters::GENESIS_COINBASE_TX_HEX);
+
+  blocksFileName(parameters::CRYPTONOTE_BLOCKS_FILENAME);
+  blockIndexesFileName(parameters::CRYPTONOTE_BLOCKINDEXES_FILENAME);
+  txPoolFileName(parameters::CRYPTONOTE_POOLDATA_FILENAME);
+
+	genesisCoinbaseTxHex(parameters::GENESIS_COINBASE_TX_HEX);
+	
+	blockGrantedFullRewardZoneV1(parameters::CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V1);
+    blockGrantedFullRewardZoneV2(parameters::CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V2);
+	
+	difficultyWindowV1(parameters::DIFFICULTY_WINDOW_V1);
+    difficultyWindowV2(parameters::DIFFICULTY_WINDOW_V2);
+	
+	difficultyLagV1(parameters::DIFFICULTY_LAG_V1);
+    difficultyLagV2(parameters::DIFFICULTY_LAG_V2);
+	
+	difficultyCutV1(parameters::DIFFICULTY_CUT_V1);
+    difficultyCutV2(parameters::DIFFICULTY_CUT_V2);
+	
+	expectedNumberOfBlocksPerDay(parameters::EXPECTED_NUMBER_OF_BLOCKS_PER_DAY);
+	
     isBlockexplorer(false);
-    testnet(false);
+  testnet(false);
 }
 
 Transaction CurrencyBuilder::generateGenesisTransaction() {

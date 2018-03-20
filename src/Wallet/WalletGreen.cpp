@@ -2426,13 +2426,13 @@ std::vector<Crypto::PublicKey> WalletGreen::extractKeyOutputKeys(uint64_t amount
   throwIfStopped();
 
   m_logger(DEBUGGING) << "Requesting transactions details";
-  System::RemoteContext<void> getTransactionsContext(m_dispatcher, [this, amount, absolute_offsets, &mixin_outputs, &requestFinished, &extractKeysError] () mutable {
+  System::RemoteContext<void> getExtractKeyOutputKeysContext(m_dispatcher, [this, amount, absolute_offsets, &mixin_outputs, &requestFinished, &extractKeysError] () mutable {
     m_node.extractKeyOutputKeys(amount, absolute_offsets, mixin_outputs, [&requestFinished, &extractKeysError, this] (std::error_code ec) mutable {
       extractKeysError = ec;
       m_dispatcher.remoteSpawn(std::bind(asyncRequestCompletion, std::ref(requestFinished)));
     });
   });
-  getTransactionsContext.get();
+  getExtractKeyOutputKeysContext.get();
   requestFinished.wait();
 
   if (extractKeysError) {

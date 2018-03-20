@@ -219,6 +219,15 @@ void GetTransactions::Response::serialize(CryptoNote::ISerializer& serializer) {
   serializer(items, "items");
 }
 
+void GetUnconfirmedTransactions::Request::serialize(CryptoNote::ISerializer& serializer) {
+  serializer(addresses, "addresses");
+  serializer(paymentId, "paymentId");
+}
+
+void GetUnconfirmedTransactions::Response::serialize(CryptoNote::ISerializer& serializer) {
+  serializer(items, "items");
+}
+
 void GetUnconfirmedTransactionHashes::Request::serialize(CryptoNote::ISerializer& serializer) {
   serializer(addresses, "addresses");
 }

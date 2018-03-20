@@ -1,12 +1,16 @@
 cmake_minimum_required(VERSION 2.8.6)
 
-set(VERSION "0.1")
+set(VERSION "2.0")
 
-set(BOOST_ROOT "C:/Boost" CACHE STRING "Boost Directory")
-set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib-v141-x64/lib" CACHE STRING "Boost Library Directory")
-set(Boost_COMPILER "-vc141" CACHE STRING "Boost Compiler Used")
+if(WIN32)
+  set(BOOST_ROOT "C:/Boost" CACHE STRING "Boost Directory")
+  set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib-v141-x64/lib" CACHE STRING "Boost Library Directory")
+  set(Boost_COMPILER "-vc141" CACHE STRING "Boost Compiler Used")
 
-set(PYTHON_EXECUTABLE "C:/Users/Administrator/AppData/Local/Programs/Python/Python36-32/python.exe" CACHE STRING "PYTHON Executable File")
+  set(PYTHON_EXECUTABLE "C:/Users/Administrator/AppData/Local/Programs/Python/Python36-32/python.exe" CACHE STRING "PYTHON Executable File")
+elseif(APPLE)
+  add_definitions("-Wno-c++11-extensions") 
+endif()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_CONFIGURATION_TYPES Debug RelWithDebInfo Release CACHE TYPE INTERNAL)

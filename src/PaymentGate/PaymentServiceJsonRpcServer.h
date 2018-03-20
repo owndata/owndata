@@ -82,6 +82,7 @@ private:
   std::error_code handleGetBlockHashes(const GetBlockHashes::Request& request, GetBlockHashes::Response& response);
   std::error_code handleGetTransactionHashes(const GetTransactionHashes::Request& request, GetTransactionHashes::Response& response);
   std::error_code handleGetTransactions(const GetTransactions::Request& request, GetTransactions::Response& response);
+    std::error_code handleGetUnconfirmedTransactions(const GetUnconfirmedTransactions::Request& request, GetUnconfirmedTransactions::Response& response);
   std::error_code handleGetUnconfirmedTransactionHashes(const GetUnconfirmedTransactionHashes::Request& request, GetUnconfirmedTransactionHashes::Response& response);
   std::error_code handleGetTransaction(const GetTransaction::Request& request, GetTransaction::Response& response);
   std::error_code handleSendTransaction(const SendTransaction::Request& request, SendTransaction::Response& response);

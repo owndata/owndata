@@ -41,6 +41,14 @@ typedef boost::variant<BaseInput, KeyInput> TransactionInput;
 
 typedef boost::variant<KeyOutput> TransactionOutputTarget;
 
+struct TransferSpentOutput {
+  uint64_t amount;
+  std::string key_image;
+  std::string tx_pub_key;
+  uint64_t out_index;
+  uint64_t mixin;
+};
+
 struct TransactionOutput {
   uint64_t amount;
   TransactionOutputTarget target;

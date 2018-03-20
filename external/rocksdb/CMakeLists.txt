@@ -35,8 +35,8 @@ string(REGEX REPLACE "(..)_(..)_..(..).*" "\\1/\\2/\\3" DATE "${DATE}")
 string(REGEX REPLACE "(..):(.....).*" " \\1:\\2" TIME "${TIME}")
 set(GIT_DATE_TIME ${DATE}${TIME})
 
-string(REGEX REPLACE "\n" "" GIT_DATE_TIME ${GIT_DATE_TIME})
-string(REGEX REPLACE "\r" "" GIT_DATE_TIME ${GIT_DATE_TIME})
+string(REGEX REPLACE "\n" "" GIT_DATE_TIME "${GIT_DATE_TIME}")
+string(REGEX REPLACE "\r" "" GIT_DATE_TIME "${GIT_DATE_TIME}")
 
 find_package(Git)
 

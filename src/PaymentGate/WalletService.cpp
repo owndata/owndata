@@ -310,7 +310,9 @@ PaymentService::TransactionRpcInfo convertTransactionWithTransfersToTransactionR
       rpcTransfer.spentOutputs.insert(rpcTransfer.spentOutputs.end(), spentOutputs.begin(), spentOutputs.end());
 
 
-    transactionInfo.transfers.push_back(std::move(rpcTransfer));
+    if ((rpcTransfer.amount > 0 && !rpcTransfer.address.empty()) || (rpcTransfer.address.empty() && rpcTransfer.spentOutputs.size() > 0)) {
+      transactionInfo.transfers.push_back(std::move(rpcTransfer));
+    }
   }
 
   return transactionInfo;
@@ -354,7 +356,8 @@ std::vector<Crypto::PublicKey> known_outputs_keys;
       rpcBlock.transactions.push_back(std::move(transactionInfo));
     }
 
-    rpcBlocks.push_back(std::move(rpcBlock));
+    if (rpcBlock.transactions.size() > 0)
+      rpcBlocks.push_back(std::move(rpcBlock));
   }
 
   return rpcBlocks;
@@ -1097,6 +1100,30 @@ std::error_code WalletService::sendDelayedTransaction(const std::string& transac
   return std::error_code();
 }
 
+std::error_code WalletService::getUnconfirmedTransactions(const std::vector<std::string>& addresses, const std::string& paymentId, std::vector<TransactionsInBlockRpcInfo>& transactions) {
+  try {
+    System::EventLock lk(readyEvent);
+
+    validateAddresses(addresses, currency, logger);
+
+    if (!paymentId.empty()) {
+      validatePaymentId(paymentId, logger);
+    }
+
+    TransactionsInBlockInfoFilter transactionFilter(addresses, paymentId);
+
+    transactions = getRpcUnconfirmedTransactions(transactionFilter);
+  } catch (std::system_error& x) {
+    logger(Logging::WARNING, Logging::BRIGHT_YELLOW) << "Error while getting unconfirmed transactions: " << x.what();
+    return x.code();
+  } catch (std::exception& x) {
+    logger(Logging::WARNING, Logging::BRIGHT_YELLOW) << "Error while getting unconfirmed transactions: " << x.what();
+    return make_error_code(CryptoNote::error::INTERNAL_WALLET_ERROR);
+  }
+
+  return std::error_code();
+}
+
 std::error_code WalletService::getUnconfirmedTransactionHashes(const std::vector<std::string>& addresses, std::vector<std::string>& transactionHashes) {
   try {
     System::EventLock lk(readyEvent);
@@ -1319,6 +1346,19 @@ std::vector<TransactionHashesInBlockRpcInfo> WalletService::getRpcTransactionHas
 
 std::vector<TransactionsInBlockRpcInfo> WalletService::getRpcTransactions(const Crypto::Hash& blockHash, size_t blockCount, const TransactionsInBlockInfoFilter& filter) const {
   std::vector<CryptoNote::TransactionsInBlockInfo> allTransactions = getTransactions(blockHash, blockCount);
+  std::vector<CryptoNote::TransactionsInBlockInfo> filteredTransactions = filterTransactions(allTransactions, filter);
+  return convertTransactionsInBlockInfoToTransactionsInBlockRpcInfo(wallet, filter.addresses, filteredTransactions);
+}
+
+std::vector<TransactionsInBlockRpcInfo> WalletService::getRpcUnconfirmedTransactions(const TransactionsInBlockInfoFilter& filter) const {
+  std::vector<CryptoNote::TransactionsInBlockInfo> allTransactions = {};
+  std::vector<CryptoNote::WalletTransactionWithTransfers> unconfirmedTransactions = wallet.getUnconfirmedTransactions();
+  for (const auto& unconfirmedTransaction: unconfirmedTransactions) {
+    CryptoNote::TransactionsInBlockInfo transaction;
+    Common::podFromHex("0000000000000000000000000000000000000000000000000000000000000000", transaction.blockHash);
+    transaction.transactions = unconfirmedTransactions;
+    allTransactions.emplace_back(transaction);
+  }
   std::vector<CryptoNote::TransactionsInBlockInfo> filteredTransactions = filterTransactions(allTransactions, filter);
   return convertTransactionsInBlockInfoToTransactionsInBlockRpcInfo(wallet, filter.addresses, filteredTransactions);
 }

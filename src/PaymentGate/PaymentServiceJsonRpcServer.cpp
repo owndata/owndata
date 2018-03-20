@@ -43,6 +43,7 @@ PaymentServiceJsonRpcServer::PaymentServiceJsonRpcServer(System::Dispatcher& sys
   handlers.emplace("getBlockHashes", jsonHandler<GetBlockHashes::Request, GetBlockHashes::Response>(std::bind(&PaymentServiceJsonRpcServer::handleGetBlockHashes, this, std::placeholders::_1, std::placeholders::_2)));
   handlers.emplace("getTransactionHashes", jsonHandler<GetTransactionHashes::Request, GetTransactionHashes::Response>(std::bind(&PaymentServiceJsonRpcServer::handleGetTransactionHashes, this, std::placeholders::_1, std::placeholders::_2)));
   handlers.emplace("getTransactions", jsonHandler<GetTransactions::Request, GetTransactions::Response>(std::bind(&PaymentServiceJsonRpcServer::handleGetTransactions, this, std::placeholders::_1, std::placeholders::_2)));
+    handlers.emplace("getUnconfirmedTransactions", jsonHandler<GetUnconfirmedTransactions::Request, GetUnconfirmedTransactions::Response>(std::bind(&PaymentServiceJsonRpcServer::handleGetUnconfirmedTransactions, this, std::placeholders::_1, std::placeholders::_2)));
   handlers.emplace("getUnconfirmedTransactionHashes", jsonHandler<GetUnconfirmedTransactionHashes::Request, GetUnconfirmedTransactionHashes::Response>(std::bind(&PaymentServiceJsonRpcServer::handleGetUnconfirmedTransactionHashes, this, std::placeholders::_1, std::placeholders::_2)));
   handlers.emplace("getTransaction", jsonHandler<GetTransaction::Request, GetTransaction::Response>(std::bind(&PaymentServiceJsonRpcServer::handleGetTransaction, this, std::placeholders::_1, std::placeholders::_2)));
   handlers.emplace("sendTransaction", jsonHandler<SendTransaction::Request, SendTransaction::Response>(std::bind(&PaymentServiceJsonRpcServer::handleSendTransaction, this, std::placeholders::_1, std::placeholders::_2)));
@@ -162,6 +163,10 @@ std::error_code PaymentServiceJsonRpcServer::handleGetTransactions(const GetTran
     return service.getTransactions(request.addresses, request.firstBlockIndex, request.blockCount, request.paymentId, response.items);
   }
 }
+
+  std::error_code PaymentServiceJsonRpcServer::handleGetUnconfirmedTransactions(const GetUnconfirmedTransactions::Request& request, GetUnconfirmedTransactions::Response& response) {
+    return service.getUnconfirmedTransactions(request.addresses, request.paymentId, response.items);
+  }
 
 std::error_code PaymentServiceJsonRpcServer::handleGetUnconfirmedTransactionHashes(const GetUnconfirmedTransactionHashes::Request& request, GetUnconfirmedTransactionHashes::Response& response) {
   return service.getUnconfirmedTransactionHashes(request.addresses, response.transactionHashes);

@@ -21,6 +21,7 @@
 #include <limits>
 #include <vector>
 
+#include "CryptoNote.h"
 #include "Serialization/ISerializer.h"
 
 namespace PaymentService {
@@ -216,12 +217,9 @@ struct GetTransactionHashes {
   };
 };
 
-struct TransferRpcSpentOutput {
-  uint64_t amount;
-  std::string key_image;
-  std::string tx_pub_key;
-  uint64_t out_index;
-  uint64_t mixin;
+struct TransferRpcSpentOutput: CryptoNote::TransferSpentOutput {
+//  explicit TransferRpcSpentOutput(const CryptoNote::TransferSpentOutput& transferSpentOutput):
+//    CryptoNote::TransferSpentOutput(transferSpentOutput) { }
 
   void serialize(CryptoNote::ISerializer& serializer);
 };
@@ -279,6 +277,21 @@ struct GetTransactions {
     std::string blockHash;
     uint32_t firstBlockIndex = std::numeric_limits<uint32_t>::max();
     uint32_t blockCount;
+    std::string paymentId;
+
+    void serialize(CryptoNote::ISerializer& serializer);
+  };
+
+  struct Response {
+    std::vector<TransactionsInBlockRpcInfo> items;
+
+    void serialize(CryptoNote::ISerializer& serializer);
+  };
+};
+
+struct GetUnconfirmedTransactions {
+  struct Request {
+    std::vector<std::string> addresses;
     std::string paymentId;
 
     void serialize(CryptoNote::ISerializer& serializer);

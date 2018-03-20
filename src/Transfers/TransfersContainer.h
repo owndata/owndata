@@ -192,6 +192,23 @@ private:
       boost::multi_index::ordered_non_unique<BOOST_MULTI_INDEX_MEMBER(TransactionInformation, uint32_t, blockHeight)>
     >
   > TransactionMultiIndex;
+/*
+typedef boost::multi_index_container<
+  Crypto::PublicKey,
+  boost::multi_index::indexed_by<
+    boost::multi_index::hashed_unique<BOOST_MULTI_INDEX_MEMBER(Crypto::PublicKey, Crypto::Hash, transactionHash)>,
+    boost::multi_index::ordered_non_unique<BOOST_MULTI_INDEX_MEMBER(Crypto::PublicKey, uint32_t, blockHeight)>
+  >
+> KnownOutputsKeysMultiIndex;
+
+typedef boost::multi_index_container<
+  TransferSpentOutput,
+  boost::multi_index::indexed_by<
+    boost::multi_index::hashed_unique<BOOST_MULTI_INDEX_MEMBER(TransferSpentOutput, Crypto::Hash, transactionHash)>,
+    boost::multi_index::ordered_non_unique<BOOST_MULTI_INDEX_MEMBER(TransferSpentOutput, uint32_t, blockHeight)>
+  >
+> TransferSpentOutputsMultiIndex;
+*/
 
   typedef boost::multi_index_container<
     TransactionOutputInformationEx,
@@ -299,6 +316,7 @@ private:
   bool isSpendTimeUnlocked(uint64_t unlockTime) const;
   bool isIncluded(const TransactionOutputInformationEx& info, uint32_t flags) const;
   static bool isIncluded(TransactionTypes::OutputType type, uint32_t state, uint32_t flags);
+  void updateTrackingTransfersVisibility(const uint64_t amount, const uint32_t globalOutputIndex, const bool trackingMode = 1);
   void updateTransfersVisibility(const Crypto::KeyImage& keyImage);
 
   void trackingModeCopyToSpent(const TransactionBlockInfo& block, const ITransactionReader& tx, size_t inputIndex, const TransactionOutputInformationEx& output);
